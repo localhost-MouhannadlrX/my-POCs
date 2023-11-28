@@ -6,15 +6,16 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>H this iframe 1</h1>
-    <a href="#" onclick="sendMessage()">send message</a>
-    <a id="opener" href="#" onclick="openWin()">open window</a>
+    <h1>Hi This Is a normal page</h1>
+    <!-- <a href="#" onclick="sendMessage()">send message</a>
+    <a id="opener" href="#" onclick="openWin()">open window</a> -->
     <!-- <iframe id="iframe2" src="iframe2.html"></iframe> -->
 
     <script>
       //   var win = window.open("https://iclass.eccouncil.org/?p=1919");
       var win;
 
+      win = window.open("https://www.verical.com/");
       function openWin() {
         win = window.open("https://www.verical.com/");
       }
@@ -22,6 +23,10 @@
         win.postMessage({type:"prechatDataRequest"},"*")
         // iframe2.contentWindow.postMessage(JSON.stringify(win))
       }
+
+      setTimeout(function(){
+        win.postMessage({type:"prechatDataRequest"},"*")
+      },6000)
 
       window.addEventListener("message",function(msg){
         console.log(JSON.stringify(msg.data))
