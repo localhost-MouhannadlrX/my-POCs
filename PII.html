@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>H this iframe 1</h1>
+    <a href="#" onclick="sendMessage()">send message</a>
+    <a id="opener" href="#" onclick="openWin()">open window</a>
+    <!-- <iframe id="iframe2" src="iframe2.html"></iframe> -->
+
+    <script>
+      //   var win = window.open("https://iclass.eccouncil.org/?p=1919");
+      var win;
+
+      function openWin() {
+        win = window.open("https://www.verical.com/");
+      }
+      function sendMessage() {
+        win.postMessage({type:"prechatDataRequest"},"*")
+        // iframe2.contentWindow.postMessage(JSON.stringify(win))
+      }
+
+      window.addEventListener("message",function(msg){
+        console.log(JSON.stringify(msg.data))
+        alert(JSON.stringify(msg.data))
+
+      })
+    </script>
+  </body>
+</html>
+
