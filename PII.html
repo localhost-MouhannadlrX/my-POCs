@@ -20,20 +20,20 @@
         win = window.open("https://www.verical.com/");
       }
       function sendMessage() {
-        win.postMessage({type:"prechatDataRequest"},"*")
+        win.postMessage({ type: "prechatDataRequest" }, "*");
         // iframe2.contentWindow.postMessage(JSON.stringify(win))
       }
 
-      setTimeout(function(){
-        win.postMessage({type:"prechatDataRequest"},"*")
-      },6000)
+      setTimeout(function () {
+        win.postMessage({ type: "prechatDataRequest" }, "*");
+      }, 6000);
 
-      window.addEventListener("message",function(msg){
-        console.log(JSON.stringify(msg.data))
-        alert(JSON.stringify(msg.data))
-
-      })
+      window.addEventListener("message", function (msg) {
+        if (msg.origin === "https://www.verical.com") {
+          console.log(JSON.stringify(msg.data));
+          alert(JSON.stringify(msg.data));
+        }
+      });
     </script>
   </body>
 </html>
-
