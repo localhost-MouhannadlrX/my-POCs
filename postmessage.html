@@ -12,12 +12,12 @@
     <!-- <iframe id="iframe2" src="iframe2.html"></iframe> -->
 
     <script>
-      //   var win = window.open("https://iclass.eccouncil.org/?p=1919");
+     
       var win;
 
-      win = window.open("https://www.verical.com/");
+      win = window.open("https://banber.enertwin.tencent.com/nsbb/library");
       function openWin() {
-        win = window.open("https://www.verical.com/");
+        win = window.open("https://banber.enertwin.tencent.com/nsbb/library");
       }
       function sendMessage() {
         win.postMessage({ type: "prechatDataRequest" }, "*");
@@ -25,15 +25,10 @@
       }
 
       setTimeout(function () {
-        win.postMessage({ type: "prechatDataRequest" }, "*");
+        win.postMessage({isInside:1 , url:"javascript:alert(document.domain)"});
       }, 6000);
 
-      window.addEventListener("message", function (msg) {
-        if (msg.origin === "https://www.verical.com") {
-          console.log(JSON.stringify(msg.data));
-          alert(JSON.stringify(msg.data));
-        }
-      });
+   
     </script>
   </body>
 </html>
