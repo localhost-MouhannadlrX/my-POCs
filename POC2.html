@@ -28,7 +28,7 @@
       }, 5000);
 
       window.addEventListener("message", function (msg) {
-        if ((msg.origin = "https://iclass.eccouncil.org")) {
+        if ((msg.origin == "https://iclass.eccouncil.org")) {
           console.log(msg.data);
           alert(JSON.stringify(msg.data));
         }
